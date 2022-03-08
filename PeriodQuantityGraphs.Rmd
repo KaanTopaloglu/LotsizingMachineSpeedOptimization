@@ -8,7 +8,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 
-data = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data.csv", fileEncoding="UTF-8-BOM")
+data10 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data10.csv", fileEncoding="UTF-8-BOM")
 ```
 
 
@@ -16,22 +16,22 @@ data = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data.csv"
 
 
 ```{r T=10}
-data
+data10
 
 inv_neworder <- c("inv(low)","inv(med)","inv(high)")
 mt_neworder <- c("mt(low)","mt(med)","mt(high)")
-data <- mutate(transform(data,
+data10 <- mutate(transform(data10,
              invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
 
-data <- mutate(transform(data,
+data10 <- mutate(transform(data10,
              mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
-dfdata = data%>%
+dfdata10 = data10%>%
   filter(type == "u(WIP)" | type == "i(End Item)" | type == "y(Total Production)") %>%
   mutate(value = as.numeric(value)) %>%
   mutate(period = as.factor(period))
-dfdata
+dfdata10
 
-ggplot(dfdata, aes(x = period, y=value, group = type)) +
+ggplot(dfdata10, aes(x = period, y=value, group = type)) +
   geom_col(aes(fill= type), position =position_stack(reverse = TRUE), width = 0.5) + 
   geom_hline(yintercept = 0) +
  # geom_text(aes(label = value), position = position_stack(vjust = 0.6), size = 2.2, color = "white") +
@@ -40,7 +40,7 @@ ggplot(dfdata, aes(x = period, y=value, group = type)) +
 
 
 ```{r T=20}
-data20 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/bişi20.csv", fileEncoding="UTF-8-BOM")
+data20 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data20.csv", fileEncoding="UTF-8-BOM")
 
 data20
 
@@ -66,7 +66,7 @@ ggplot(dfdata20, aes(x = period, y=value, group = type)) +
 ```
 
 ```{r T=30}
-data30 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/bişi30.csv", fileEncoding="UTF-8-BOM")
+data30 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data30.csv", fileEncoding="UTF-8-BOM")
 
 data30
 

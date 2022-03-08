@@ -1,0 +1,32 @@
+---
+title: "time_level"
+output: html_document
+---
+
+```{r setup}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+#AVERAGE SPEED
+
+```{r denemee}
+avgSpeed = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/avgSpeed.csv", fileEncoding="UTF-8-BOM")
+avgSpeed
+avgSpeed = avgSpeed %>%
+  mutate(T_Planning_Horizon = as.factor(T_Planning_Horizon),
+         level = as.character(level),
+         time = as.numeric(time))
+neworder <- c("low","med","high")
+avgSpeed
+avgSpeeddnm <- mutate(transform(avgSpeed,
+             level=factor(level,levels=neworder)),level)
+
+ggplot(avgSpeeddnm, aes(x = level, y = time, shape = T_Planning_Horizon, colour = T_Planning_Horizon)) +  xlab("mt (Daily Capacity Levels)") + ylab("vmt (Unit Processing Time)") +
+  geom_line(aes( y = time, group = T_Planning_Horizon )) +
+  geom_point(size = 4)
+
+```
+
+

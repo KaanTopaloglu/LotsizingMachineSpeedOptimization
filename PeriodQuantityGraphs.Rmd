@@ -1,0 +1,92 @@
+---
+title: "data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+data = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/data.csv", fileEncoding="UTF-8-BOM")
+```
+
+
+#QUANTITY/PERIOD GRAPHS
+
+
+```{r T=10}
+data
+
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+data <- mutate(transform(data,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+
+data <- mutate(transform(data,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+dfdata = data%>%
+  filter(type == "u(WIP)" | type == "i(End Item)" | type == "y(Total Production)") %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(period = as.factor(period))
+dfdata
+
+ggplot(dfdata, aes(x = period, y=value, group = type)) +
+  geom_col(aes(fill= type), position =position_stack(reverse = TRUE), width = 0.5) + 
+  geom_hline(yintercept = 0) +
+ # geom_text(aes(label = value), position = position_stack(vjust = 0.6), size = 2.2, color = "white") +
+  facet_grid(invlevel~mtlevel) + labs(y="Total Production", x = "Periods")
+```
+
+
+```{r T=20}
+data20 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/bişi20.csv", fileEncoding="UTF-8-BOM")
+
+data20
+
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+data20 <- mutate(transform(data20,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+
+data20 <- mutate(transform(data20,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+dfdata20 = data20%>%
+  filter(type == "u(WIP)" | type == "i(End Item)" | type == "y(Total Production)") %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(period = as.numeric(period))
+dfdata20
+
+ggplot(dfdata20, aes(x = period, y=value, group = type)) +
+  geom_col(aes(fill= type), position =position_stack(reverse = FALSE), width = 0.5) + 
+  geom_hline(yintercept = 0) +
+  #geom_text(aes(label = value), position = position_stack(vjust = 0.6), size = 2.2, color = "white") +
+  facet_grid(invlevel~mtlevel) + labs(y="Quantity", x = "t(Periods)")
+
+```
+
+```{r T=30}
+data30 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/bişi30.csv", fileEncoding="UTF-8-BOM")
+
+data30
+
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+data30 <- mutate(transform(data30,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+
+data30 <- mutate(transform(data30,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+dfdata30 = data30%>%
+  filter(type == "u(WIP)" | type == "i(End Item)" | type == "y(Total Production)") %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(period = as.numeric(period))
+dfdata30
+
+ggplot(dfdata30, aes(x = period, y=value, group = type)) +
+  geom_col(aes(fill= type), position =position_stack(reverse = T), width = 0.5) + 
+  geom_hline(yintercept = 0) +
+  #geom_text(aes(label = value), position = position_stack(vjust = 0.6), size = 2.2, color = "white") +
+  facet_grid(invlevel~mtlevel) + labs(y="Quantity", x = "t(Periods)")
+```
+

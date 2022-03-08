@@ -1,0 +1,80 @@
+---
+title: "GraphDeneme20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+#SPEED/DEMAND GRAPH
+
+
+```{r T=10}
+sdata = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/sample10.csv", fileEncoding="UTF-8-BOM")
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+
+sdata <- mutate(transform(sdata,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+sdata <- mutate(transform(sdata,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+
+sdata <- sdata %>%
+  mutate(time = as.numeric(time),
+         days = as.factor(days))
+
+graph = ggplot(sdata, aes(x = days)) + 
+  geom_col(aes( y = total_demand),fill = "dodgerblue", width = 0.5) +
+  geom_line(aes(y = time/5), size = 1, color="red", group = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "v(Unit Processing Time)"))+ labs(y="d(Total Demand)", x = "t(Periods)")
+graph + facet_grid(invlevel ~ mtlevel, margins = "value")
+
+```
+
+
+```{r T=20}
+sdata20 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/sample20.csv", fileEncoding="UTF-8-BOM")
+
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+
+sdata20 <- mutate(transform(sdata20,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+sdata20 <- mutate(transform(sdata20,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+
+sdata20 <- sdata20 %>%
+  mutate(time = as.numeric(time),
+         days = as.numeric(days))
+
+graph = ggplot(sdata20, aes(x = days)) + 
+  geom_col(aes( y = total_demand),fill = "dodgerblue", width = 0.5) +
+  geom_line(aes(y = time/5), size = 1, color="red", group = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "v(Unit Processing Time)"))+ labs(y="d(Total Demand)", x = "t(Periods)")
+graph + facet_grid(invlevel ~ mtlevel, margins = "value")
+```
+
+```{r T=30}
+sdata30 = read.csv2(file = "C:/Users/Kaan/Desktop/Instances/csv_dosyalari/sample30.csv", fileEncoding="UTF-8-BOM")
+inv_neworder <- c("inv(low)","inv(med)","inv(high)")
+mt_neworder <- c("mt(low)","mt(med)","mt(high)")
+sdata30
+sdata30 <- mutate(transform(sdata30,
+             invlevel=factor(invlevel,levels=inv_neworder)),invlevel)
+sdata30 <- mutate(transform(sdata30,
+             mtlevel=factor(mtlevel,levels=mt_neworder)),mtlevel)
+
+sdata30 <- sdata30 %>%
+  mutate(time = as.numeric(time),
+         days = as.numeric(days))
+
+graph = ggplot(sdata30, aes(x = days)) + 
+  geom_col(aes( y = total_demand),fill = "dodgerblue",width = 0.5) +
+  geom_line(aes(y = time/5), size = 1, color="red", group = 1, ) +
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "v(Unit Processing Time)"))+ labs(y="d(Total Demand)", x = "t(Periods)")
+graph + facet_grid(invlevel ~ mtlevel, margins = "value")
+```
+
